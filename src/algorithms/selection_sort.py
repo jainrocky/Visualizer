@@ -25,6 +25,8 @@ class SelectionSort(Sort):
             raise ValueError('data must be not None')
         if display:
             self.set_visualization(True)
+        if data:
+            self.set_data(data)
         data=self.get_data()
 
 

@@ -26,6 +26,7 @@ class Display():
         
     def __on(self, ):
         pg.init()
+        self.__font = pg.font.SysFont('Arial', 13)
         self.__display=pg.display.set_mode((self.__width, self.__height))
         self.__running=True
         self.__start_time=time.time()
@@ -41,19 +42,31 @@ class Display():
         data=self.__algo.get_data()
         pg.display.set_caption('{} [{}] [{}] [Speed {}%]'.format(self.__algo.get_name(), time.strftime('%H:%M:%S', time.gmtime(time.time()-self.__start_time)), len(data), 100-round(round(self.__speed, 2)*100/0.30), 2))
         self.__display.fill(self.__bg_color)
-        rect_width = int(self.__width/len(data))
+        rect_width = self.__width/(len(data))
         for i in range(len(data)):
             colour = self.__data_color
+            text_color=(0, 0, 0)
             if first == data[i]:
                 colour = self.__first_color
+                text_color=self.__first_color
             elif second == data[i]:
                 colour = self.__second_color
-            pg.draw.rect(self.__display, colour, ((i+1)*rect_width,self.__height,rect_width*0.75,-data[i]))
+                text_color=self.__second_color
+            # Rect(left, top, width, height)
+            pg.draw.rect(self.__display, colour, (i*rect_width, self.__height, rect_width*0.75, -data[i]))
+            # pg.draw.polygon(self.__display, (0, 0, 0), (
+            #     (i*rect_width + rect_width*0.75/2, self.__height-20-data[i]),
+            #     (i*rect_width, self.__height-30-data[i]),
+            #     (i*rect_width, self.__height-50-data[i]),
+            #     (i*rect_width+rect_width*.96, self.__height-50-data[i]),
+            #     (i*rect_width+rect_width*.96, self.__height-30-data[i]),
+            # ))
+            self.__display.blit(self.__font.render('%d'%data[i], True, text_color), (i*rect_width, self.__height-20-data[i]))
         if not self.__close():
             pg.display.update()
             time.sleep(self.__speed)
 
-    def __close(self,):
+    def __close(self, ):
         if not self.__running:
             return True
         for event in pg.event.get():

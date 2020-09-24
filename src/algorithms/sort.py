@@ -1,11 +1,10 @@
 from abc import ABCMeta, abstractmethod
-import time
-import pygame as pg
+
 
 class Sort(metaclass=ABCMeta):
 
     def __init__(self, name, data):
-        self.set_name(name)
+        self.__name=name
         self.set_data(data)
         self.__visualization=False
 
@@ -18,10 +17,7 @@ class Sort(metaclass=ABCMeta):
 
     def get_data(self):
         return self.__data
-
-    def set_name(self, name):
-        self.__name=name
-
+        
     def get_name(self):
         return self.__name
     

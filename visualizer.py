@@ -56,8 +56,8 @@ def main():
                     print(Fore.RED+algos[int(option)][0]+' is not Implemented yet'+Style.RESET_ALL)
                     continue
                 print(Fore.CYAN+algos[int(option)][1].__doc__+Style.RESET_ALL)
-                data=random.sample(range(700), 50)
-                Display(algos[int(option)][1](data=data), height=710, width=1024, first_color=(255, 255, 0))
+                data=random.sample(range(1, 700), 50)
+                Display(algos[int(option)][1](data=data), height=800, width=1200, first_color=(255, 255, 0))
             except:
                 print('Some Error occurred!')
         else:
@@ -71,3 +71,4 @@ if __name__=='__main__':
     # print(bs.get_data())
     # bs.sort()
     # print(bs.get_data())
+    

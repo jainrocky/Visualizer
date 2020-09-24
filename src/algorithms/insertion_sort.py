@@ -24,6 +24,8 @@ class InsertionSort(Sort):
             raise ValueError('data must be not None')
         if display:
             self.set_visualization(True)
+        if data:
+            self.set_data(data)
         data=self.get_data()
 
         for i in range(1, len(data)):
