@@ -51,15 +51,23 @@ def main():
         if option=='q' or option=='Q':
             run=False
         elif option.isdigit() and 0<=int(option)<=len(algos)-1:
-            try:
-                if not algos[int(option)][1]:
-                    print(Fore.RED+algos[int(option)][0]+' is not Implemented yet'+Style.RESET_ALL)
-                    continue
-                print(Fore.CYAN+algos[int(option)][1].__doc__+Style.RESET_ALL)
-                data=random.sample(range(1, 700), 50)
-                Display(algos[int(option)][1](data=data), height=800, width=1200, first_color=(255, 255, 0))
-            except:
-                print('Some Error occurred!')
+            # try:
+            if not algos[int(option)][1]:
+                print(Fore.RED+algos[int(option)][0]+' is not Implemented yet'+Style.RESET_ALL)
+                continue
+            print(Fore.CYAN+algos[int(option)][1].__doc__+Style.RESET_ALL)
+            data=random.sample(range(1, 700), 50)
+            Display(
+                algos[int(option)][1](data=data),
+                height=800,
+                width=1200,
+                # data_color=(255, 255, 255),
+                data_color=(0,0,0),
+                text_color=(255, 255, 255),
+                first_color=(0, 0, 255),
+            )
+            # except:
+            #     print('Some Error occurred!')
         else:
             print(Fore.RED+'Please choose a correct option!'+Style.RESET_ALL)
 

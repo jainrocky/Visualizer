@@ -2,12 +2,12 @@ from os import environ
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import pygame as pg
 from src.algorithms.sort import Sort
-import time, sys
+import time, sys, os
 
 
 class Display():
 
-    def __init__(self, algorithm, width=800, height=600, bg_color=(255, 255, 255), data_color=(80, 0, 255), first_color=(0,255,0), second_color=(255,0,0)):
+    def __init__(self, algorithm, width=800, height=600, bg_color=(255, 255, 255), data_color=(80, 0, 255), text_color=(0, 0, 0), first_color=(0,255,0), second_color=(255,0,0)):
         if not isinstance(algorithm, (Sort, )):
             raise ValueError('algorithm must be derived from Sort')
         if not width:
@@ -19,6 +19,7 @@ class Display():
         self.__height=height
         self.__bg_color=bg_color
         self.__data_color=data_color
+        self.__text_color=text_color
         self.__first_color=first_color
         self.__second_color=second_color
         self.__speed=0.05
@@ -28,6 +29,7 @@ class Display():
         pg.init()
         self.__font = pg.font.SysFont('Arial', 13)
         self.__display=pg.display.set_mode((self.__width, self.__height))
+        self.__bg_image=pg.image.load(os.path.join(os.getcwd(), 'res', 'images', 'bg.jpg'))
         self.__running=True
         self.__start_time=time.time()
         self.__algo.sort(display=self)
@@ -41,11 +43,12 @@ class Display():
             return
         data=self.__algo.get_data()
         pg.display.set_caption('{} [{}] [{}] [Speed {}%]'.format(self.__algo.get_name(), time.strftime('%H:%M:%S', time.gmtime(time.time()-self.__start_time)), len(data), 100-round(round(self.__speed, 2)*100/0.30), 2))
-        self.__display.fill(self.__bg_color)
+        self.__display.blit(self.__bg_image, (0, 0))
+        # self.__display.fill(self.__bg_color)
         rect_width = self.__width/(len(data))
         for i in range(len(data)):
             colour = self.__data_color
-            text_color=(0, 0, 0)
+            text_color=self.__text_color
             if first == data[i]:
                 colour = self.__first_color
                 text_color=self.__first_color
